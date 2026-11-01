@@ -4,6 +4,7 @@ import { injectContext } from '@taiga-ui/polymorpheus';
 import { DownloadService } from 'app/core/services/download.service';
 import { LoadingService } from 'app/core/services/loading.service';
 import { BackupService } from 'app/shared/services/backup.service';
+import { NotificationService } from 'app/core/services/notification-service.service';
 
 @Component({
   selector: 'app-export-download-modal',
@@ -16,6 +17,7 @@ export class ExportDownloadModalComponent {
   private readonly backupService = inject(BackupService);
   private readonly loadingService = inject(LoadingService);
   private readonly downlaodService = inject(DownloadService);
+  private readonly notificationService = inject(NotificationService);
   protected isProcessRunning = signal<boolean>(false);
   protected lastBackupDate = this.context.data ?? undefined;
 
@@ -25,6 +27,14 @@ export class ExportDownloadModalComponent {
       next: () => {
         this.loadingService.loadingOn();
         this.loadingService.longLoadingOn();
+      },
+      error: () => {
+        this.isProcessRunning.set(false);
+        this.notificationService
+          .Message('Failed To Generate The Backup', 'Error')
+          .ErrorType()
+          .BottomRight()
+          .Show();
       },
       complete: () => {
         this.isProcessRunning.set(false);
