@@ -41,6 +41,15 @@
   overflow: hidden;
 }
 
+.tab-item:not(.disabled) {
+  cursor: pointer;
+}
+
+.tab-item:focus-visible {
+  outline: 2px solid var(--tui-border-focus);
+  outline-offset: -2px;
+}
+
 .tab-item.active {
   color: #6788ff !important;
 }

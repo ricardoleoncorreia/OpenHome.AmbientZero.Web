@@ -1,24 +1,16 @@
 @if(tabs(); as tabsCollection)
 {
-<div class="custom-navbar-container">
-    @for(tab of tabsCollection; track tab; let i = $index)
+<div class="custom-navbar-container" role="tablist" (keydown)="onKeydown($event)">
+    @for(tab of tabsCollection; track tab.id; let i = $index)
     {
-    @if(tab.enabled)
-    {
-    <span [id]="tab.selectorId" class="tab-item" [class.active]="index() === i" (click)="setActive(i)">
+    <button #tabButton type="button" role="tab" [id]="tab.selectorId" class="tab-item" [class.active]="index() === i"
+        [class.disabled]="!tab.enabled" [attr.aria-selected]="index() === i"
+        [attr.aria-disabled]="tab.enabled ? null : true" [tabIndex]="index() === i ? 0 : -1"
+        [tuiHint]="tab.enabled ? null : tab.hint" tuiHintDirection="bottom" (click)="setActive(i)">
         <tui-icon [icon]="tab.icon" />
         <span class="tab-wrapper"></span>
         <span class="tab-text">{{tab.label}}</span>
-    </span>
-    }
-    @else
-    {
-    <span [id]="tab.selectorId" [tuiHint]="tab.hint"  tuiHintDirection="bottom" class="tab-item disabled">
-        <tui-icon [icon]="tab.icon" />
-        <span class="tab-wrapper"></span>
-        <span class="tab-text">{{tab.label}}</span>
-    </span>
-    }
+    </button>
     }
 </div>
 }

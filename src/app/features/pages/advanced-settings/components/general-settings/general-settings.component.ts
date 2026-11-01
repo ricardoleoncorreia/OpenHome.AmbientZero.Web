@@ -19,7 +19,8 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { ForceUpdateModalComponent } from 'app/core/components/force-update-modal/force-update-modal.component';
 import { ModuleUpdateRequest } from 'app/shared/models/module-update-request';
 import { TimedAutoRefreshModalComponent } from 'app/core/components/timed-auto-refresh-modal/timed-auto-refresh-modal.component';
-import { LoadingService } from 'app/core/services/loading.service';
+import { ExportDownloadModalComponent } from 'app/core/components/export-download-modal/export-download-modal.component';
+import { ImportUploadModalComponent } from 'app/core/components/import-upload-modal/import-upload-modal.component';
 
 @Component({
   selector: 'app-general-settings',
@@ -46,7 +47,6 @@ export class GeneralSettingsComponent {
   private readonly dialog = inject(TuiResponsiveDialogService);
   private readonly advancedSettingsService = inject(AdvancedSettingsService);
   private readonly notificationService = inject(TuiNotificationService);
-  private readonly loadingService = inject(LoadingService);
 
   showUpdateColumn = computed(() => {
     return this.versionList()?.some((v) => v.remoteVersion > v.localVersion) ?? false;
@@ -170,8 +170,26 @@ export class GeneralSettingsComponent {
       .subscribe();
   }
 
-  protected exportDatabse() {
-    this.loadingService.loadingOn();
-    this.loadingService.longLoadingOn();
+  protected openExportDialog() {
+    this.dialog
+      .open(new PolymorpheusComponent(ExportDownloadModalComponent), {
+        label: 'Export Backup',
+        closable: true,
+        dismissible: true,
+        size: 'm',
+        data: this.data().lastBackupDate,
+      })
+      .subscribe();
+  }
+
+  protected openImportDialog() {
+    this.dialog
+      .open(new PolymorpheusComponent(ImportUploadModalComponent), {
+        label: 'Import Backup',
+        closable: true,
+        dismissible: true,
+        size: 'm',
+      })
+      .subscribe();
   }
 }

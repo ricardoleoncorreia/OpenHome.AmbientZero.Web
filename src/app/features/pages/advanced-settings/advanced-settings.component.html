@@ -1,7 +1,7 @@
 <app-nav-bar [tabs]="tabs" (activeItemIndexChange)="onTabChange($event)">
     
 </app-nav-bar>
-<div #scrollHost class="page-scroll-container">
+<div #scrollHost class="page-scroll-container" role="tabpanel" [attr.aria-labelledby]="tabs[index()].selectorId">
     <ng-container *ngComponentOutlet="currentComponent(); inputs: currentInputs()" />
 </div>
 <app-scroll-indicator />

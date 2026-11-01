@@ -3,4 +3,5 @@ export interface GeneralSettingsResponse {
   automaticUpdatesEnabled: boolean;
   maxBatteryValue: number;
   minBatteryValue: number;
+  lastBackupDate?: string | null;
 }

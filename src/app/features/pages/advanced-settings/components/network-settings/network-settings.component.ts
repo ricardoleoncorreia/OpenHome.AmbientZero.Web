@@ -2,7 +2,7 @@ import { Component, effect, inject, input, OnInit, signal } from '@angular/core'
 import { FormsModule } from '@angular/forms';
 import { TuiDropdownMobile } from '@taiga-ui/addon-mobile';
 import { TuiButton, TuiDropdown, TuiInput, TuiTextfieldComponent } from '@taiga-ui/core';
-import { TuiComboBox, TuiDataListWrapper } from '@taiga-ui/kit';
+import { TuiComboBox, TuiDataListWrapper, TuiInputNumber } from '@taiga-ui/kit';
 import { AccessPointSettingsResponse } from '../../../../../shared/interfaces/access-point-settings-response';
 import { PasswordStrengthComponent } from '../../../../../shared/components/password-strength/password-strength.component';
 import { AdvancedSettingsService } from 'app/shared/services/advanced-settings.service';
@@ -20,6 +20,7 @@ import { NotificationService } from 'app/core/services/notification-service.serv
     TuiDropdown,
     TuiDropdownMobile,
     TuiComboBox,
+    TuiInputNumber,
     PasswordStrengthComponent,
   ],
   templateUrl: './network-settings.component.html',
@@ -49,14 +50,16 @@ export class NetworkSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.selectedSecurity.set(this.ApSecurityList[this.data().accessPointSecurity]);
+    this.data().channel ??= 6;
+    this.data().country ??= 'GB';
   }
 
   protected saveNetworkSettings() {
     const networkSettingsRequest = new NetworkUpdateRequest(
       this.data().accessPointName,
       this.data().accessPointPassword,
-      6,
-      'GB',
+      this.data().channel!,
+      this.data().country!.toUpperCase(),
       this.data().accessPointSecurity,
     );
     this.advancedSettingsService.updateNetowrkSettings(networkSettingsRequest).subscribe({

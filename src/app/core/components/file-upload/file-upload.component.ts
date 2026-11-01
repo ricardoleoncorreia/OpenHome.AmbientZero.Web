@@ -18,7 +18,7 @@ import { VersionService } from 'app/shared/services/version.service';
 export class FileUploadComponent {
   protected readonly formatSize = inject(TUI_FILE_OPTIONS).formatSize;
   protected readonly context = injectContext<TuiDialogContext<ModuleUpdateRequest, string>>();
-  protected readonly file = signal<File | undefined>(undefined);
+  readonly file = signal<File | undefined>(undefined);
   protected readonly uploadedFile: File | undefined = undefined;
   protected showFileUpload: boolean = false;
   private readonly versionService = inject(VersionService);

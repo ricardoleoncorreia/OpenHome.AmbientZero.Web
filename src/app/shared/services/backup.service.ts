@@ -12,7 +12,13 @@ export class BackupService {
   uploadImportFile(file: File) {
     const form = new FormData();
     form.append('file', file);
-    return this.http.post<void>(`${this.bakcupApiRoot}/UploadModuleFile`, form);
+    return this.http.post<void>(this.bakcupApiRoot, form);
+  }
+
+  importBackup(file: File) {
+    const form = new FormData();
+    form.append('backup', file);
+    return this.http.post<void>(`${this.bakcupApiRoot}/ImportBackup`, form);
   }
 
   generateBackup(): Observable<void> {

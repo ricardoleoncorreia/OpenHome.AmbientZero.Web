@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { TuiDialogContext } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { DownloadService } from 'app/core/services/download.service';
 import { LoadingService } from 'app/core/services/loading.service';
@@ -7,7 +7,7 @@ import { BackupService } from 'app/shared/services/backup.service';
 
 @Component({
   selector: 'app-export-download-modal',
-  imports: [],
+  imports: [TuiButton],
   templateUrl: './export-download-modal.component.html',
   styleUrl: './export-download-modal.component.less',
 })
